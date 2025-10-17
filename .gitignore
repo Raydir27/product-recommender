@@ -115,7 +115,7 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Environment files
-frontend/.env
+# frontend/.env
 frontend/.env.local
 frontend/.env.development.local
 frontend/.env.test.local
