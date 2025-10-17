@@ -1,0 +1,152 @@
+# ===========================================
+# 🧠 GENERAL IGNORE RULES
+# ===========================================
+
+# Byte-compiled / cached / temporary files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.pdb
+
+# Virtual environments
+.env
+.env.*
+venv/
+env/
+.venv/
+venv.bak/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Logs & debug files
+*.log
+logs/
+nohup.out
+
+# Editor & system junk
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+.DS_Store
+Thumbs.db
+
+# ===========================================
+# 🧩 PYTHON / ML / NOTEBOOKS
+# ===========================================
+
+# Workspace settings
+*.code-workspace
+
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+.notebooks_cache/
+*.nbconvert.ipynb
+
+# Model artifacts
+models/
+*.pt
+*.pth
+*.onnx
+*.ckpt
+*.h5
+
+# Temporary training outputs
+runs/
+outputs/
+checkpoints/
+wandb/
+mlruns/
+
+# Data dumps (keep raw data local)
+data/
+*.csv
+*.tsv
+*.json
+*.parquet
+*.xlsx
+*.zip
+*.tar.gz
+
+# ===========================================
+# ⚙️ FASTAPI / BACKEND
+# ===========================================
+
+# SQLite or other local DBs
+*.db
+*.sqlite
+*.sqlite3
+
+# Compiled / generated files
+__pycache__/
+*.pyc
+*.pyo
+
+# API keys / secrets
+secrets.json
+config.json
+*.key
+*.pem
+
+# ===========================================
+# 💻 FRONTEND (React + Vite)
+# ===========================================
+
+# Node modules & build artifacts
+frontend/node_modules/
+frontend/.parcel-cache/
+frontend/dist/
+frontend/.next/
+frontend/build/
+
+# npm / yarn logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# ===========================================
+# 🧪 TESTING
+# ===========================================
+
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+
+# ===========================================
+# 🧰 MISCELLANEOUS
+# ===========================================
+
+# Cache folders
+__pycache__/
+.cache/
+*.cache
+*.tmp
+
+# OS / platform files
+Desktop.ini
+ehthumbs.db
+
+# Local environment exports
+environment.yml.bak
+requirements-dev.txt
+"*.code-workspace" 
