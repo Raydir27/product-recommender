@@ -1,11 +1,14 @@
-fastapi[all]~=0.95.0
+fastapi[all]
 sqlalchemy~=2.0.12
-pydantic~=1.10.2
+pydantic==2.8.2
 email-validator >= 1.1.3
 asyncpg >= 0.25.0
 SQLAlchemy-Utils >= 0.41.0
 passlib >= 1.7.4
 psycopg2 >= 2.9.1
 aiosqlite >= 0.17.0
-fastapi_users[sqlalchemy2,oauth] >= 11.0.0
+fastapi_users[oauth] >= 11.0.0
 fastapi_users_db_sqlalchemy >= 3.0.0
+uvicorn
+python-dotenv
+python-multipart

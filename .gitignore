@@ -53,7 +53,7 @@ Thumbs.db
 *.nbconvert.ipynb
 
 # Model artifacts
-models/
+# models/
 # *.pt
 # *.pth
 *.onnx

@@ -1,52 +1,27 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .database import SessionLocal, create_db_and_tables
-from .routers import users, items
-import os
+from .routes import recommend, analyze, generate_description
 
-# http vs https based on TLS setting
-if os.environ['ENABLE_TLS'] == 'true':
-    FRONT_DOMAIN = 'https://'+os.environ['DOMAIN']
-else:
-    FRONT_DOMAIN = 'http://'+os.environ['DOMAIN']
+app = FastAPI(title="Product Recommendation API (skeleton)")
 
-
-app = FastAPI()
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-origins = [
-    FRONT_DOMAIN,
-]
-print(origins)
-
+# Allow local frontend dev server
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=[
+        "http://localhost:3000",         
+        "http://127.0.0.1:3000",
+        "http://localhost:5173",
+        "http://127.0.0.1:5173"
+],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(users.router)
-app.include_router(items.router,
-                   prefix="/items",
-                   tags=["items"])
-
-
-@app.on_event("startup")
-async def on_startup():
-    # Not needed if you setup a migration system like Alembic
-    await create_db_and_tables()
-
+app.include_router(recommend.router, prefix="/api/recommend", tags=["recommend"])
+app.include_router(analyze.router, prefix="/api/analyze", tags=["analyze"])
+app.include_router(generate_description.router, prefix="/api/generate_description", tags=["generate_description"])
 
 @app.get("/")
 async def root():
-    return {"message": "Hello Bigger Applications!"}
+    return {"status": "ok", "service": "product-recommendation-api"}
