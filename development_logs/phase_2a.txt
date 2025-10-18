@@ -27,4 +27,4 @@ A few noteworthy points from this preprocessing phase:
 
 Next step (Phase 2B) is to generate embeddings and store them — ideally in a **vector database** (like Pinecone or ChromaDB) for semantic search and recommendation.
 
-Would you like to continue by building the **embedding generation pipeline** next, or pause to do a **data analytics notebook phase** (visualizing product trends, price distributions, and category relationships) first?
+#####
