@@ -95,7 +95,7 @@ It combines multiple AI domains — **Machine Learning**, **Natural Language Pro
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/product-recommendation-app.git
+git clone https://github.com/Raydir27/product-recommendation-app.git
 cd product-recommendation-app
 ```
 
