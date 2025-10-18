@@ -1,0 +1,30 @@
+The missing data plot shows that while title, brand, and categories are fully populated (good news for our embedding generation), description, manufacturer, and country_of_origin are partial at best. These gaps suggest we’ll need to generate synthetic text (using a GenAI model) later for uniformity.
+
+The brand and category distributions show a few dominant players — likely indicating brand skew in the data. That’s useful for both analytics and bias correction in recommendations.
+
+Finally, the price distribution (after cleaning) is lopsided — a long tail of higher-priced furniture, with most items clustering in the lower range. That’ll inform both the analytics visualization and model normalization.
+
+Next up in Phase 2A, we’ll build preprocessing utilities to:
+
+Clean and standardize text fields.
+
+Normalize numeric columns (like price).
+
+Fill or synthesize missing textual attributes where needed.
+
+Prepare embeddings-ready representations (title + description + brand combo).
+
+
+
+#####
+And there we go — the dataset is now scrubbed, polished, and ready for model-building. Each product now has a **unified text representation** (`text_for_embedding`) that merges title, brand, description, category, material, and color — perfect fodder for embedding models like Sentence-BERT or OpenAI’s text-embedding APIs.
+
+A few noteworthy points from this preprocessing phase:
+
+* Missing descriptions are now gracefully synthesized from brand and category context.
+* Prices are fully numeric and normalized — so they can be scaled or bucketed for analytics later.
+* Text is cleaned to remove weird symbols and unify casing, keeping embedding quality consistent.
+
+Next step (Phase 2B) is to generate embeddings and store them — ideally in a **vector database** (like Pinecone or ChromaDB) for semantic search and recommendation.
+
+Would you like to continue by building the **embedding generation pipeline** next, or pause to do a **data analytics notebook phase** (visualizing product trends, price distributions, and category relationships) first?
