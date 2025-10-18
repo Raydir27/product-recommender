@@ -170,5 +170,3 @@ AI/ML Developer | Computer Vision & GenAI Research Enthusiast
 🔗 [LinkedIn](https://www.linkedin.com/in/rajarshi-biswas-rb27)
 
 ---
-
-Would you like me to tailor this README further for **GitHub recruiter readability** (with visuals like architecture diagrams and project demo commands)? That version is slightly more “presentation-ready” for portfolio submission.
