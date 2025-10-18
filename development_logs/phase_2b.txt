@@ -1,0 +1,50 @@
+Development Log — Phase 2B: Retrieval Validation and Recommendation API Integration
+Date: 18 Oct 2025
+
+The retrieval phase marked the system’s first true test of semantic intelligence. With embeddings already indexed in Pinecone, the goal was simple but decisive: ask a natural-language question and see if the database understands it.
+
+The initial diagnostic notebook, pinecone_check.ipynb, served as the proving ground. Using a curated set of prompts such as “modern wooden dining table,” “Scandinavian lounge chair,” and “compact bedside table with drawer,” we generated fresh embeddings via Sentence-BERT (all-mpnet-base-v2) and sent them into Pinecone’s new API layer.
+
+The migration to Pinecone’s redesigned SDK was the main engineering challenge. The legacy pinecone-client and pc.index(name) patterns are now deprecated, replaced by:
+
+pc = Pinecone(api_key=api_key, environment=env)
+idx = pc.Index(host=INDEX_HOST)
+
+Once this change was in place, retrieval calls executed cleanly. Every returned vector carried valid metadata and the expected dimensionality of 768, confirming index integrity.
+
+Similarity scores were strong: top-1 scores averaged around 0.83 and the mean of the top-5 hovered near 0.7. Category alignment was immediately visible; “wooden dining table” consistently clustered around dining and coffee tables, not unrelated items.
+
+With retrieval quality verified, the next step was to operationalize it in the backend. A new FastAPI route (/api/recommend/query) was implemented to complete the end-to-end loop. The endpoint performs four main steps:
+
+Receive prompt and validate the JSON payload
+
+Embed and normalize the query (768-dim unit vector)
+
+Query Pinecone for top-k semantic matches
+
+Return structured JSON containing id, score, title, brand, category, and price
+
+To accommodate Pinecone’s shifting interface, the code checks several initialization paths (pc.Index(host=...), pc.Index(name), pc.index(name)) and logs whichever succeeds.
+
+Debugging on Windows briefly revealed curl escaping issues that caused JSON decode errors. Correct quoting resolved the problem, and valid requests returned clean JSON responses. Duplicate router prefixes in main.py were also removed to prevent overlapping endpoints.
+
+Performance benchmarks after optimization:
+Cold start latency: ~1.1 seconds (model load)
+Warm query latency: 250–350 ms average
+Response: deterministic, metadata-rich, CORS-ready for frontend use
+
+By the end of this phase, the recommendation backend could accept any free-form user prompt and translate it into semantically meaningful product suggestions without relying on keywords or static filters.
+
+Key highlights from Phase 2B:
+• Migrated successfully to Pinecone’s new API (pc.Index(host=INDEX_HOST)) for forward compatibility
+• Verified cosine-based retrieval integrity with normalized embeddings
+• Established the /api/recommend/query FastAPI endpoint as the system’s semantic core
+• Confirmed stable latency and consistent metadata parsing across prompts
+• Completed the loop from query → embedding → vector search → ranked product output
+
+Next Steps – Phase 3:
+3A. Analytics: visualize embedding clusters, category coverage, and brand distributions
+3B. GenAI: generate creative product blurbs using a lightweight LLM (LangChain)
+3C. Frontend: integrate the API into the React interface for conversational recommendations
+
+Status: Phase 2B completed — retrieval engine fully operational and semantically aligned.
