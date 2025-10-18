@@ -2,6 +2,7 @@
 
 *AI + ML + CV + GenAI Integration using FastAPI & React*
 
+---
 
 ## 🚀 Overview
 
