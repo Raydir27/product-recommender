@@ -1,10 +1,7 @@
----
-
 # 🧠 Product Recommendation & Analytics Web App
 
 *AI + ML + CV + GenAI Integration using FastAPI & React*
 
----
 
 ## 🚀 Overview
 
