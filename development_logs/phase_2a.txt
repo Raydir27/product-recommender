@@ -1,30 +1,28 @@
-The missing data plot shows that while title, brand, and categories are fully populated (good news for our embedding generation), description, manufacturer, and country_of_origin are partial at best. These gaps suggest we’ll need to generate synthetic text (using a GenAI model) later for uniformity.
+🧭 Development Log — Phase 2A: Text Preprocessing & Embedding Preparation
 
-The brand and category distributions show a few dominant players — likely indicating brand skew in the data. That’s useful for both analytics and bias correction in recommendations.
+The missing data visualization confirmed a familiar pattern: title, brand, and category fields are fully populated — reassuring, since they’re core features for embedding generation. However, description, manufacturer, and country_of_origin remain patchy. These gaps hint at the next logical step for Phase 3 — synthesizing concise product blurbs using a GenAI model to fill informational voids and keep embedding representations consistent.
 
-Finally, the price distribution (after cleaning) is lopsided — a long tail of higher-priced furniture, with most items clustering in the lower range. That’ll inform both the analytics visualization and model normalization.
+Price cleaning turned out to be an interesting detour. Instead of simple imputation, a KNN-based price prediction model was trained using neighboring attributes like brand, category, and material. This approach preserves local continuity in pricing — products of similar type and brand cluster around realistic ranges. The final distribution now looks smooth and credible, with a modest long-tail of premium items (mostly furniture and home décor).
 
-Next up in Phase 2A, we’ll build preprocessing utilities to:
+Brand and category frequency plots reaffirmed a few dominant players — a mild case of brand skew, which we’ll keep in mind when analyzing bias or designing recommendation weighting. These insights also point toward the need for stratified evaluation later, so that retrieval quality isn’t dominated by a handful of high-volume brands.
 
-Clean and standardize text fields.
+After cleaning and normalization, we moved into text standardization. Each product now carries a unified text field — combined_text — merging its title, brand, description, category, material, and color. The text is de-noised (special characters stripped, whitespace unified, casing normalized) and ready for semantic embedding.
 
-Normalize numeric columns (like price).
+To handle long or verbose descriptions, a chunking utility was introduced (threshold = 1200 chars, overlap = 200), ensuring large product narratives are split into manageable segments for the model. Each chunk keeps a consistent uniq_id reference, allowing later reaggregation of product-level results after embedding-based retrieval.
 
-Fill or synthesize missing textual attributes where needed.
+Embedding generation was performed using Sentence-BERT (all-mpnet-base-v2), with normalization applied pre-upsert to match Pinecone’s cosine metric configuration. Each embedding vector was unit-length normalized, and the resulting index was uploaded to Pinecone under the ikarus-products-dev namespace. Batch upsert logs confirmed clean ingestion and consistent vector dimensions.
 
-Prepare embeddings-ready representations (title + description + brand combo).
+A few technical highlights from this phase:
 
+KNN-based price imputation ensured realistic numeric recovery without distorting value ranges.
 
+Chunked text embeddings improved representation of long-form descriptions.
 
-#####
-And there we go — the dataset is now scrubbed, polished, and ready for model-building. Each product now has a **unified text representation** (`text_for_embedding`) that merges title, brand, description, category, material, and color — perfect fodder for embedding models like Sentence-BERT or OpenAI’s text-embedding APIs.
+Normalization for cosine similarity guarantees consistent similarity scoring in Pinecone.
 
-A few noteworthy points from this preprocessing phase:
+Metadata fields (brand, category, material, color, etc.) were preserved for downstream filtering and analytics.
 
-* Missing descriptions are now gracefully synthesized from brand and category context.
-* Prices are fully numeric and normalized — so they can be scaled or bucketed for analytics later.
-* Text is cleaned to remove weird symbols and unify casing, keeping embedding quality consistent.
+And there we go — the dataset has evolved from a patchy, uneven table into a well-structured, embedding-ready corpus. Every product now has a unified semantic fingerprint, aligned with vector search best practices.
 
-Next step (Phase 2B) is to generate embeddings and store them — ideally in a **vector database** (like Pinecone or ChromaDB) for semantic search and recommendation.
-
-#####
+Next up in Phase 2B:
+We’ll run semantic retrieval and clustering experiments using the Pinecone index — evaluating similarity, recall@k, and deduped product-level recommendations. This will be the first tangible test of the system’s ability to “understand” product semantics rather than just keywords.
