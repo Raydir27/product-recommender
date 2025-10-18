@@ -10,7 +10,7 @@ After cleaning and normalization, we moved into text standardization. Each produ
 
 To handle long or verbose descriptions, a chunking utility was introduced (threshold = 1200 chars, overlap = 200), ensuring large product narratives are split into manageable segments for the model. Each chunk keeps a consistent uniq_id reference, allowing later reaggregation of product-level results after embedding-based retrieval.
 
-Embedding generation was performed using Sentence-BERT (all-mpnet-base-v2), with normalization applied pre-upsert to match Pinecone’s cosine metric configuration. Each embedding vector was unit-length normalized, and the resulting index was uploaded to Pinecone under the ikarus-products-dev namespace. Batch upsert logs confirmed clean ingestion and consistent vector dimensions.
+Embedding generation was performed using Sentence-BERT (all-mpnet-base-v2), with normalization applied pre-upsert to match Pinecone’s cosine metric configuration. Each embedding vector was unit-length normalized, and the resulting index was uploaded to Pinecone under the ikarus-products namespace. Batch upsert logs confirmed clean ingestion and consistent vector dimensions.
 
 A few technical highlights from this phase:
 
